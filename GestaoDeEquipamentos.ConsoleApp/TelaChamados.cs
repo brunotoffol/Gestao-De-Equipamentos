@@ -6,12 +6,10 @@
         public int contadorChamados = 0;
 
         private TelaEquipamento telaEquipamento;
-
         public TelaChamados(TelaEquipamento telaEquipamento)
         {
             this.telaEquipamento = telaEquipamento;
         }
-
         public void CadastrarChamado()
         {
             Console.Clear();
@@ -160,9 +158,49 @@
             chamadoParaEditar.EquipamentoRelacionadoChamado = novoEquipamento;
 
             Console.WriteLine("Chamado editado com sucesso!");
+            Console.WriteLine("--------------------------------------------");
             Console.WriteLine("Pressione ENTER para voltar ao menu.");
             Console.ReadLine();
         }
+
+        public void ExcluirChamado()
+        {
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Excluir Chamado");
+            Console.WriteLine("--------------------------------------------");
+
+            VisualizarChamados();
+
+            Console.Write("Digite o ID do chamado que deseja excluir: ");
+            int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+            bool conseguiuExcluir = false;
+
+            for (int i = 0; i < chamados.Length; i++)
+            {
+                if (chamados[i] != null && chamados[i].Id == idSelecionado)
+                {
+                    chamados[i] = null;
+                    conseguiuExcluir = true;
+                    break;
+                }
+            }
+
+            if (conseguiuExcluir)
+            {
+                Console.WriteLine("Chamado excluído com sucesso!");
+            }
+            else
+            {
+                Console.WriteLine("Chamado não encontrado.");
+            }
+
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Pressione ENTER para voltar ao menu.");
+            Console.ReadLine();
+        }
+
     }
 }
 
