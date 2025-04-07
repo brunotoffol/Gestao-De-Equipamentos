@@ -44,18 +44,8 @@ internal class Program
             }
             else if (opcaoPrincipal == "2")
             {
-                Console.Clear();
-                Console.WriteLine("--------------------------------------------");
-                Console.WriteLine("Controle de Chamados");
-                Console.WriteLine("--------------------------------------------");
-                Console.WriteLine("1 - Cadastrar Chamado");
-                Console.WriteLine("2 - Visualizar Chamados");
-                Console.WriteLine("3 - Editar Chamados");
-                Console.WriteLine("4 - Excluir Chamado");
-                Console.WriteLine("--------------------------------------------");
-                Console.Write("Digite a opção desejada: ");
-                string opcaoChamado = Console.ReadLine();
-
+                string opcaoChamado = telaChamados.ApresentarMenuChamados();
+                
                 switch (opcaoChamado)
                 {
                     case "1":

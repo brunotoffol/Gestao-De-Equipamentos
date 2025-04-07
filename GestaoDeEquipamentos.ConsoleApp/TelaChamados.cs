@@ -10,6 +10,21 @@
         {
             this.telaEquipamento = telaEquipamento;
         }
+
+        public string ApresentarMenuChamados()
+        {
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Controle de Chamados");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("1 - Cadastrar Chamado");
+            Console.WriteLine("2 - Visualizar Chamados");
+            Console.WriteLine("3 - Editar Chamado");
+            Console.WriteLine("4 - Excluir Chamado");
+            Console.WriteLine("--------------------------------------------");
+            Console.Write("Digite a opção desejada: ");
+            return Console.ReadLine();
+        }
         public void CadastrarChamado()
         {
             Console.Clear();
@@ -162,7 +177,6 @@
             Console.WriteLine("Pressione ENTER para voltar ao menu.");
             Console.ReadLine();
         }
-
         public void ExcluirChamado()
         {
             Console.Clear();
@@ -189,11 +203,13 @@
 
             if (conseguiuExcluir)
             {
+                Console.WriteLine("--------------------------------------------");
                 Console.WriteLine("Chamado excluído com sucesso!");
             }
             else
             {
-                Console.WriteLine("Chamado não encontrado.");
+                Console.WriteLine("--------------------------------------------");
+                Console.WriteLine("O chamado solicitado não existe");
             }
 
             Console.WriteLine("--------------------------------------------");
