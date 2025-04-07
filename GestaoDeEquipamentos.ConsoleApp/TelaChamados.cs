@@ -121,17 +121,17 @@
             Console.Write("Digite o ID do chamado que deseja editar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-            Chamado chamadoParaEditar = null;
+            Chamado chamadoEditar = null;
             
             for (int i = 0; i < chamados.Length; i++)
             {
                 if (chamados[i] != null && chamados[i].Id == idSelecionado)
                 {
-                    chamadoParaEditar = chamados[i];
+                    chamadoEditar = chamados[i];
                     break;
                 }
             }
-            if (chamadoParaEditar == null)
+            if (chamadoEditar == null)
             {
                 Console.WriteLine("Chamado não encontrado!");
                 Console.ReadLine();
@@ -143,6 +143,14 @@
 
             Console.Write("Digite a nova descrição para o chamado: ");
             string novaDescricao = Console.ReadLine();
+
+            Console.Write("Digite a nova data de abertura (dd/MM/yyyy): ");
+            DateTime novaDataAbertura;
+
+            while (!DateTime.TryParse(Console.ReadLine(), out novaDataAbertura))
+            {
+                Console.Write("Data inválida. Digite novamente (dd/MM/yyyy): ");
+            }
 
             Console.WriteLine("Escolha o novo equipamento relacionado ao chamado:");
             telaEquipamento.VisualizarEquipamentos(false);
@@ -168,9 +176,10 @@
                 return;
             }
 
-            chamadoParaEditar.TituloChamado = novoTitulo;
-            chamadoParaEditar.DescricaoChamado = novaDescricao;
-            chamadoParaEditar.EquipamentoRelacionadoChamado = novoEquipamento;
+            chamadoEditar.TituloChamado = novoTitulo;
+            chamadoEditar.DescricaoChamado = novaDescricao;
+            chamadoEditar.DataAberturaChamado = novaDataAbertura;
+            chamadoEditar.EquipamentoRelacionadoChamado = novoEquipamento;
 
             Console.WriteLine("Chamado editado com sucesso!");
             Console.WriteLine("--------------------------------------------");
