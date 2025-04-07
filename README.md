@@ -34,7 +34,7 @@ dotnet run --project GestaoDeEquipamento.ConsoleApp
 ```
 6. Para executar o arquivo compilado, navegue até a pasta ./GestaoDeEquipamento.ConsoleApp/bin/Release/net8.0/ e execute o arquivo:
 ```
-Calculdora.GestaoDeEquipamento.exe
+GestaoDeEquipamento.ConsoleApp.exe
 ```
 
 ## Requisitos
