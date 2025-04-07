@@ -50,6 +50,7 @@ internal class Program
                 Console.WriteLine("--------------------------------------------");
                 Console.WriteLine("1 - Cadastrar Chamado");
                 Console.WriteLine("2 - Visualizar Chamados");
+                Console.WriteLine("3 - Editar Chamados");
                 Console.WriteLine("--------------------------------------------");
                 Console.Write("Digite a opção desejada: ");
                 string opcaoChamado = Console.ReadLine();
@@ -61,6 +62,9 @@ internal class Program
                         break;
                     case "2":
                         telaChamados.VisualizarChamados();
+                        break;
+                    case "3":
+                        telaChamados.EditarChamado();
                         break;
                 }
 

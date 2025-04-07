@@ -67,7 +67,6 @@
             Console.WriteLine("Pressione ENTER para continuar...");
             Console.ReadLine();
         }
-
         public void VisualizarChamados()
         {
             Console.Clear();
@@ -84,6 +83,7 @@
                 Chamado chamado = chamados[i];
                 if (chamado == null) continue;
 
+                
                 Console.WriteLine("{0, -5} | {1, -20} | {2, -20} | {3, -30} | {4, -15} | {5, -15}",
                     chamado.Id,
                     chamado.TituloChamado,
@@ -93,13 +93,76 @@
                     chamado.DiasChamadoAberto());
             }
 
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Pressione ENTER para voltar ao menu...");
+            Console.WriteLine("--------------------------------------------");            
             Console.ReadLine();
         }
+        public void EditarChamado()
+        {
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Editar Chamado");
+            Console.WriteLine("--------------------------------------------");
 
+            VisualizarChamados();
 
+            Console.Write("Digite o ID do chamado que deseja editar: ");
+            int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
+            Chamado chamadoParaEditar = null;
+            
+            for (int i = 0; i < chamados.Length; i++)
+            {
+                if (chamados[i] != null && chamados[i].Id == idSelecionado)
+                {
+                    chamadoParaEditar = chamados[i];
+                    break;
+                }
+            }
+            if (chamadoParaEditar == null)
+            {
+                Console.WriteLine("Chamado não encontrado!");
+                Console.ReadLine();
+                return;
+            }
 
+            Console.Write("Digite o novo título para o chamado: ");
+            string novoTitulo = Console.ReadLine();
+
+            Console.Write("Digite a nova descrição para o chamado: ");
+            string novaDescricao = Console.ReadLine();
+
+            Console.WriteLine("Escolha o novo equipamento relacionado ao chamado:");
+            telaEquipamento.VisualizarEquipamentos(false);
+
+            Console.Write("Digite o ID do equipamento: ");
+            int novoIdEquipamento = Convert.ToInt32(Console.ReadLine());
+
+            Equipamento novoEquipamento = null;
+
+            foreach (var e in telaEquipamento.equipamentos)
+            {
+                if (e != null && e.Id == novoIdEquipamento)
+                {
+                    novoEquipamento = e;
+                    break;
+                }
+            }
+
+            if (novoEquipamento == null)
+            {
+                Console.WriteLine("Equipamento não encontrado!");
+                Console.ReadLine();
+                return;
+            }
+
+            chamadoParaEditar.TituloChamado = novoTitulo;
+            chamadoParaEditar.DescricaoChamado = novaDescricao;
+            chamadoParaEditar.EquipamentoRelacionadoChamado = novoEquipamento;
+
+            Console.WriteLine("Chamado editado com sucesso!");
+            Console.WriteLine("Pressione ENTER para voltar ao menu.");
+            Console.ReadLine();
+        }
     }
 }
+
