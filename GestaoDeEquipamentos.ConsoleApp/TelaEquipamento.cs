@@ -13,7 +13,7 @@
             Console.WriteLine("Escolha a operação desejada: ");
             Console.WriteLine("1 - Cadastro de Equipamento");
             Console.WriteLine("2 - Editar Equipamento");
-            Console.WriteLine("1 - Excluir Equipamento");
+            Console.WriteLine("3 - Excluir Equipamento");
             Console.WriteLine("4 - Visualização dos Equipamentos Cadastrados");
             Console.WriteLine("--------------------------------------------");
 
@@ -170,8 +170,7 @@
 
             }
 
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Pressione ENTER para retornar ao Menu Principal");
+            Console.WriteLine("--------------------------------------------");            
         }
     }
 }

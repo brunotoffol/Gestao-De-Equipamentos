@@ -10,7 +10,96 @@
         public TelaChamados(TelaEquipamento telaEquipamento)
         {
             this.telaEquipamento = telaEquipamento;
-        }        
+        }
+
+        public void CadastrarChamado()
+        {
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Cadastro de Chamado");
+            Console.WriteLine("--------------------------------------------");
+
+            // Exibe os equipamentos disponíveis
+            telaEquipamento.VisualizarEquipamentos(true);
+
+            Console.Write("Digite o ID do equipamento relacionado: ");
+            int idEquipamento = Convert.ToInt32(Console.ReadLine());
+
+            Equipamento equipamentoRelacionadoChamado = null;
+
+            foreach (Equipamento equipamento in telaEquipamento.equipamentos)
+            {
+                if (equipamento != null && equipamento.Id == idEquipamento)
+                {
+                    equipamentoRelacionadoChamado = equipamento;
+                    break;
+                }
+            }
+
+            if (equipamentoRelacionadoChamado == null)
+            {
+                Console.WriteLine("Equipamento não encontrado.");
+                Console.ReadLine();
+                return;
+            }
+
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Cadastro de Chamado");
+            Console.WriteLine("--------------------------------------------");
+
+            Console.Write("Digite o título do chamado: ");
+            string titulo = Console.ReadLine();
+
+            Console.Write("Digite a descrição do chamado: ");
+            string descricao = Console.ReadLine();
+
+            Console.Write("Digite a data de abertura (dd/MM/yyyy): ");
+            DateTime dataAberturaChamado = Convert.ToDateTime(Console.ReadLine());
+
+            Chamado novoChamado = new Chamado(titulo, descricao, equipamentoRelacionadoChamado, dataAberturaChamado);
+            novoChamado.Id = GeradorIds.GerarIdChamado();
+
+            chamados[contadorChamados++] = novoChamado;
+
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Chamado cadastrado com sucesso!");
+            Console.WriteLine("Pressione ENTER para continuar...");
+            Console.ReadLine();
+        }
+
+        public void VisualizarChamados()
+        {
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Lista de Chamados");
+            Console.WriteLine("--------------------------------------------");
+
+            // Cabeçalho da Tabela
+            Console.WriteLine("{0, -5} | {1, -20} | {2, -20} | {3, -30} | {4, -15} | {5, -15}",
+                "ID", "Título", "Equipamento", "Descrição", "Data Abertura", "Dias em Aberto");
+
+            for (int i = 0; i < chamados.Length; i++)
+            {
+                Chamado chamado = chamados[i];
+                if (chamado == null) continue;
+
+                Console.WriteLine("{0, -5} | {1, -20} | {2, -20} | {3, -30} | {4, -15} | {5, -15}",
+                    chamado.Id,
+                    chamado.TituloChamado,
+                    chamado.EquipamentoRelacionadoChamado.Nome,
+                    chamado.DescricaoChamado,
+                    chamado.DataAberturaChamado.ToShortDateString(),
+                    chamado.DiasChamadoAberto());
+            }
+
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Pressione ENTER para voltar ao menu...");
+            Console.ReadLine();
+        }
+
+
+
 
     }
 }

@@ -1,16 +1,30 @@
-﻿namespace GestaoDeEquipamentos.ConsoleApp
+﻿using GestaoDeEquipamentos.ConsoleApp;
+
+internal class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
+        TelaEquipamento telaEquipamento = new TelaEquipamento();
+        TelaChamados telaChamados = new TelaChamados(telaEquipamento);
 
-        static void Main(string[] args)
+        while (true)
         {
-            TelaEquipamento telaEquipamento = new TelaEquipamento();
-            while (true)
-            {
-                string opcaoEscolhida = telaEquipamento.ApresentarMenu();
+            Console.Clear();
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("Sistema de Gestão");
+            Console.WriteLine("--------------------------------------------");
+            Console.WriteLine("1 - Gestão de Equipamentos");
+            Console.WriteLine("2 - Controle de Chamados");
+            Console.WriteLine("3 - Sair");
+            Console.WriteLine("--------------------------------------------");
+            Console.Write("Digite a opção desejada: ");
+            string opcaoPrincipal = Console.ReadLine();
 
-                switch (opcaoEscolhida)
+            if (opcaoPrincipal == "1")
+            {
+                string opcaoEquipamento = telaEquipamento.ApresentarMenu();
+
+                switch (opcaoEquipamento)
                 {
                     case "1":
                         telaEquipamento.CadastrarEquipamento();
@@ -24,17 +38,44 @@
                     case "4":
                         telaEquipamento.VisualizarEquipamentos(true);
                         break;
-                        case "5":
+                }
+
+                Console.ReadLine();
+            }
+            else if (opcaoPrincipal == "2")
+            {
+                Console.Clear();
+                Console.WriteLine("--------------------------------------------");
+                Console.WriteLine("Controle de Chamados");
+                Console.WriteLine("--------------------------------------------");
+                Console.WriteLine("1 - Cadastrar Chamado");
+                Console.WriteLine("2 - Visualizar Chamados");
+                Console.WriteLine("--------------------------------------------");
+                Console.Write("Digite a opção desejada: ");
+                string opcaoChamado = Console.ReadLine();
+
+                switch (opcaoChamado)
+                {
+                    case "1":
+                        telaChamados.CadastrarChamado();
                         break;
-                    default:
-                        Console.WriteLine("Saindo do programa...");
-                        Console.ReadLine();
+                    case "2":
+                        telaChamados.VisualizarChamados();
                         break;
                 }
 
                 Console.ReadLine();
             }
-
+            else if (opcaoPrincipal == "3")
+            {
+                Console.WriteLine("Encerrando o programa...");
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Opção inválida. Pressione ENTER para tentar novamente.");
+                Console.ReadLine();
+            }
         }
     }
 }

@@ -22,6 +22,11 @@ namespace GestaoDeEquipamentos.ConsoleApp
             DataAberturaChamado = dataAberturaChamado;
         }
 
+        public int DiasChamadoAberto()
+        {
+            return (DateTime.Now - DataAberturaChamado).Days;
+        }
+
 
 
     }
