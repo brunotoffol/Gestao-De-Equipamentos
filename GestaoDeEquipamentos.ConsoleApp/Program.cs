@@ -24,6 +24,8 @@
                     case "4":
                         telaEquipamento.VisualizarEquipamentos(true);
                         break;
+                        case "5":
+                        break;
                     default:
                         Console.WriteLine("Saindo do programa...");
                         Console.ReadLine();
