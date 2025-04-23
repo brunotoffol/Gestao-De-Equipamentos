@@ -4,23 +4,26 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
 {
     class TelaEquipamento
     {
-        public Equipamento[] equipamentos = new Equipamento[100];
-        public int contadorEquipamentos = 0;
-        public string ApresentarMenu()
+        public RepositorioEquipamento repositorioEquipamento;
+        public TelaEquipamento()
+        {
+            repositorioEquipamento = new RepositorioEquipamento();
+        }
+        public char ApresentarMenu()
         {
             Console.Clear();
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Gestão de Equipamentos");
+            Console.WriteLine("|          Controle de Equipamentos         |");
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Escolha a operação desejada: ");
+            
             Console.WriteLine("1 - Cadastro de Equipamento");
             Console.WriteLine("2 - Editar Equipamento");
             Console.WriteLine("1 - Excluir Equipamento");
             Console.WriteLine("4 - Visualização dos Equipamentos Cadastrados");
+            Console.WriteLine("S - Voltar");
             Console.WriteLine("--------------------------------------------");
-
-            Console.Write("Digite a opção desejada: ");
-            string opcaoEscolhida = Console.ReadLine();
+            Console.Write("Escolha a operação desejada: ");
+            char opcaoEscolhida = Convert.ToChar(Console.ReadLine()!);
 
             return opcaoEscolhida;
         }
@@ -48,12 +51,10 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
 
             Equipamento novoEquipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
-            novoEquipamento.Id = GeradorIds.GerarIdEquipamento();
 
-            equipamentos[contadorEquipamentos++] = novoEquipamento;
+            repositorioEquipamento.CadastrarEquipamento(novoEquipamento);
 
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Pressione ENTER para continuar");
+            Console.WriteLine("--------------------------------------------");            
         }
         public void EditarEquipamento()
         {
@@ -86,27 +87,12 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
 
             Equipamento novoEquipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
 
-            bool conseguiuEditar = false;
-
-            for (int i = 0; i < equipamentos.Length; i++)
-            {
-                if (equipamentos[i] == null) continue;
-
-                else if (equipamentos[i].Id == idSelecionado)
-                {
-                    equipamentos[i].Nome = novoEquipamento.Nome;
-                    equipamentos[i].Fabricante = novoEquipamento.Fabricante;
-                    equipamentos[i].PrecoAquisicao = novoEquipamento.PrecoAquisicao;
-                    equipamentos[i].DataFabricacao = novoEquipamento.DataFabricacao;
-
-                    conseguiuEditar = true;
-
-                }
-            }
+            bool conseguiuEditar = repositorioEquipamento.EditarEquipamento(idSelecionado, novoEquipamento);
 
             if (!conseguiuEditar)
             {
                 Console.WriteLine("Não foi possível editar o item selecionado");
+                return;
             }
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("Equipamento editado com sucesso");
@@ -128,18 +114,15 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             Console.WriteLine("Digite o ID do registro que deseja selecionar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-            bool conseguiuExcluir = false;
+            bool conseguiuExcluir = repositorioEquipamento.ExcluirEquipamento(idSelecionado);
 
-            for (int i = 0; i < equipamentos.Length; i++)
+            if (!conseguiuExcluir)
             {
-                if (equipamentos[i] == null) continue;
-
-                else if (equipamentos[i].Id == idSelecionado)
-                {
-                    equipamentos[i] = null;
-                    conseguiuExcluir |= true;
-                }
+                Console.WriteLine("Houve um erro durante a exclusão do registro...");
+                Console.WriteLine("Pressione ENTER para continuar");
+                return;
             }
+
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("Equipamento excluido com sucesso");
             Console.WriteLine("--------------------------------------------");
@@ -162,9 +145,11 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             //Cabeçalho da Tabela
             Console.WriteLine("{0, -10} | {1, -15} | {2, -11} | {3, -20} | {4, -20} | {5, -20}","Id", "Nome", "Numero de Série", "Fabricante", "Preço", "Data de Fabricação");
 
-            for (int i = 0; i < equipamentos.Length; i++)
+            Equipamento[] equipamentosCadastrados = repositorioEquipamento.SelecionarEquipamento();
+
+            for (int i = 0; i < equipamentosCadastrados.Length; i++)
             {
-                Equipamento e = equipamentos[i];
+                Equipamento e = equipamentosCadastrados[i];
 
                 if (e == null) continue;
 
@@ -172,8 +157,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
 
             }
 
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Pressione ENTER para retornar ao Menu Principal");
+            Console.WriteLine("--------------------------------------------");            
         }
     }
 }
