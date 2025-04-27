@@ -23,7 +23,7 @@ namespace GestaoDeEquipamentos.ConsoleApp
             Console.WriteLine("S - Voltar");            
             Console.WriteLine("--------------------------------------------");
             Console.Write("Escolha uma das opções: ");
-            char operacaoEscolhida = Convert.ToChar(Console.ReadLine()!);
+            char operacaoEscolhida = Console.ReadLine()![0];
             return operacaoEscolhida;            
         }
         public void CadastrarChamado()

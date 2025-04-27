@@ -41,7 +41,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloChamado
 
                 else if (chamados[i].Id == idChamado)
                 {
-                    chamados[i] = null;
+                    chamados[i] = null!;
 
                     return true;
                 }

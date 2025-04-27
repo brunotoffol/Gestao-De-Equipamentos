@@ -9,12 +9,19 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
         {
             repositorioEquipamento = new RepositorioEquipamento();
         }
-        public char ApresentarMenu()
+
+        public void ExibirCabecalho()
         {
             Console.Clear();
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine("|          Controle de Equipamentos         |");
             Console.WriteLine("--------------------------------------------");
+            Console.WriteLine();
+        }
+
+        public char ApresentarMenu()
+        {            
+            ExibirCabecalho();
             
             Console.WriteLine("1 - Cadastro de Equipamento");
             Console.WriteLine("2 - Editar Equipamento");
@@ -23,16 +30,15 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             Console.WriteLine("S - Voltar");
             Console.WriteLine("--------------------------------------------");
             Console.Write("Escolha a operação desejada: ");
-            char opcaoEscolhida = Convert.ToChar(Console.ReadLine()!);
+            char opcaoEscolhida = Console.ReadLine()[0];
 
             return opcaoEscolhida;
         }
         public void CadastrarEquipamento()
         {
-            Console.Clear();
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Gestão de Equipamentos");
-            Console.WriteLine("--------------------------------------------");
+            ExibirCabecalho();
+
+            Console.WriteLine();
 
             Console.WriteLine("Cadastrando Equipamento...");
             Console.WriteLine("--------------------------------------------");

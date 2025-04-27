@@ -1,12 +1,16 @@
 ﻿using GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento;
+using GestaoDeEquipamentos.ConsoleApp.ModuloFabricante;
+
 
 namespace GestaoDeEquipamentos.ConsoleApp
 {
-    internal class Program
+    class Program
     {
 
         static void Main(string[] args)
         {
+            TelaFabricante telaFabricante = new TelaFabricante();
+            
             TelaEquipamento telaEquipamento = new TelaEquipamento();
 
             RepositorioEquipamento repositorioEquipamento = telaEquipamento.repositorioEquipamento;
@@ -20,6 +24,23 @@ namespace GestaoDeEquipamentos.ConsoleApp
                  char opcaoPrincipal = telaPrincipal.ApresentarMenuPrincipal();
 
                 if (opcaoPrincipal == '1')
+                {
+                    char opcaoEscolhida = telaFabricante.ApresentarMenu();
+
+                    switch (opcaoEscolhida)
+                    {
+                        case '1': telaFabricante.CadastrarFabricante(); break;
+
+                        //case '2': telaFabricante.EditarFabricante(); break;
+
+                        //case '3': telaFabricante.ExcluirFabricante(); break;
+
+                        case '4': telaFabricante.VisualizarFabricantes(true); break;
+
+                        default: break;
+                    }
+                }
+                else if (opcaoPrincipal == '2')
                 {
                     char opcaoEscolhida = telaEquipamento.ApresentarMenu();
 
@@ -36,7 +57,7 @@ namespace GestaoDeEquipamentos.ConsoleApp
                         default: break;
                     }
                 }
-                else if (opcaoPrincipal == '2')
+                else if (opcaoPrincipal == '3')
                 {
                     char opcaoEscolhida = telaChamado.ApresentarMenu();
 
@@ -49,7 +70,7 @@ namespace GestaoDeEquipamentos.ConsoleApp
                         case '3': telaChamado.ExcluirChamado(); break;
 
                         case '4': telaChamado.VisualizarChamados(true); break;
-                        
+
                         default: break;
                     }
                 }
