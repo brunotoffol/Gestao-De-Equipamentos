@@ -14,7 +14,6 @@
 
             Console.ReadLine();
         }
-
         public static void ExibirErros(string[] erros)
         {
             Console.ForegroundColor = ConsoleColor.Red;

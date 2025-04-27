@@ -51,20 +51,60 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 
             Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
         }
-        public Fabricante ObterDadosFabricante()
+        public void EditarFabricante()
         {
-            Console.Write("Digite o nome do fabricante: ");
-            string nome = Console.ReadLine()!.Trim();
+            ExibirCabecalho();
 
-            Console.Write("Digite o endereço de email do fabricante: ");
-            string email = Console.ReadLine()!.Trim();
+            Console.WriteLine("Editando Fabricante...");
+            Console.WriteLine("--------------------------------------------");
 
-            Console.Write("Digite o telefone do fabricante: ");
-            string telefone = Console.ReadLine()!.Trim();
+            Console.WriteLine();
 
-            Fabricante fabricante = new Fabricante(nome, email, telefone);
+            VisualizarFabricantes(false);
 
-            return fabricante;
+            Console.Write("Digite o ID do registro que deseja selecionar: ");
+            int idFabricante = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine();
+
+            Fabricante fabricanteEditado = ObterDadosFabricante();
+
+            bool conseguiuEditar = repositorioFabricante.EditarFabricante(idFabricante, fabricanteEditado);
+
+            if (!conseguiuEditar)
+            {
+                Notificador.ExibirMensagem("Houve um erro durante a edição do registro...", ConsoleColor.Red);
+
+                return;
+            }
+
+            Notificador.ExibirMensagem("O registro foi editado com sucesso!", ConsoleColor.Green);
+        }
+        public void ExcluirFabricante()
+        {
+            ExibirCabecalho();
+
+            Console.WriteLine("Excluindo Fabricante...");
+            Console.WriteLine("--------------------------------------------");
+
+            Console.WriteLine();
+
+            VisualizarFabricantes(false);
+
+            Console.Write("Digite o ID do registro que deseja selecionar: ");
+            int idFabricante = Convert.ToInt32(Console.ReadLine());
+
+            Console.WriteLine();
+
+            bool conseguiuExcluir = repositorioFabricante.ExcluirFabricante(idFabricante);
+
+            if (!conseguiuExcluir)
+            {
+                Notificador.ExibirMensagem("Houve um erro durante a exclusão do registro...", ConsoleColor.Red);
+                return;
+            }
+
+            Notificador.ExibirMensagem("O registro foi excluído com sucesso!", ConsoleColor.Green);
         }
         public void VisualizarFabricantes(bool exibirTitulo)
         {
@@ -93,7 +133,21 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 
             Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.DarkYellow);
         }
+        public Fabricante ObterDadosFabricante()
+        {
+            Console.Write("Digite o nome do fabricante: ");
+            string nome = Console.ReadLine()!.Trim();
 
-        }
+            Console.Write("Digite o endereço de email do fabricante: ");
+            string email = Console.ReadLine()!.Trim();
+
+            Console.Write("Digite o telefone do fabricante: ");
+            string telefone = Console.ReadLine()!.Trim();
+
+            Fabricante fabricante = new Fabricante(nome, email, telefone);
+
+            return fabricante;
+        }       
     }
+}
 

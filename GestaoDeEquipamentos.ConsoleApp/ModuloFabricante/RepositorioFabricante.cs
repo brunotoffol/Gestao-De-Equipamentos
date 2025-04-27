@@ -18,5 +18,40 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
         {
             return fabricantes;
         }
+        public bool EditarFabricante(int idFabricante, Fabricante fabricanteEditado)
+        {
+            for (int i = 0; i < fabricantes.Length; i++)
+            {
+                if (fabricantes[i] == null)
+                    continue;
+                
+                else if (fabricantes[i].Id == idFabricante)
+                {
+                    fabricantes[i].Nome = fabricanteEditado.Nome;
+                    fabricantes[i].Email = fabricanteEditado.Email;
+                    fabricantes[i].Telefone = fabricanteEditado.Telefone;
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        public bool ExcluirFabricante(int idFabricante)
+        {
+            for (int i = 0; i < fabricantes.Length; i++)
+            {
+                if (fabricantes[i] == null)
+                    continue;
+
+                else if (fabricantes[i].Id == idFabricante)
+                {
+                    fabricantes[i] = null!;
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }
