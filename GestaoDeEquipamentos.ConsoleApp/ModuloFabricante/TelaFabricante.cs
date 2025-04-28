@@ -1,39 +1,16 @@
 ﻿using GestaoDeEquipamentos.ConsoleApp.Compartilhado;
 using GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento;
+using GestaoDeEquipamentos.ConsoleApp.Util;
 using System.ComponentModel.DataAnnotations;
 
 namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 {
-    public class TelaFabricante
+    public class TelaFabricante : TelaBase
     {
         public RepositorioFabricante repositorioFabricante;
-
-        public TelaFabricante(RepositorioFabricante repositorioFabricante)
+        public TelaFabricante(RepositorioFabricante repositorioFabricante) : base("Fabricante")
         {
             this.repositorioFabricante = repositorioFabricante;
-        }
-        public void ExibirCabecalho()
-        {
-            Console.Clear();
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("|          Controle de Fabricantes         |");
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine();
-        }
-        public char ApresentarMenu()
-        {
-            ExibirCabecalho();
-
-            Console.WriteLine("1 - Cadastro de Fabricante");
-            Console.WriteLine("2 - Editar Fabricante");
-            Console.WriteLine("1 - Excluir Fabricante");
-            Console.WriteLine("4 - Visualização dos Fabricantes Cadastrados");
-            Console.WriteLine("S - Voltar");
-            Console.WriteLine("--------------------------------------------");
-            Console.Write("Escolha a operação desejada: ");
-            char opcaoEscolhida = Console.ReadLine()![0];
-
-            return opcaoEscolhida;
         }
         public void CadastrarFabricante()
         {
@@ -41,12 +18,12 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 
             Console.WriteLine();
 
-            Console.WriteLine("Cadastrando Fabricante...");
+            Console.WriteLine($"Cadastrando {nomeEntidade}...");
             Console.WriteLine("--------------------------------------------");
-            
+
             Console.WriteLine();
 
-            Fabricante novoFabricante = ObterDadosFabricante();
+            Fabricante novoFabricante = (Fabricante)ObterDados();
 
             string erros = novoFabricante.Validar();
 
@@ -79,7 +56,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 
             Console.WriteLine();
 
-            Fabricante fabricanteEditado = ObterDadosFabricante();
+            Fabricante fabricanteEditado = (Fabricante)ObterDados();
 
             bool conseguiuEditar = repositorioFabricante.EditarRegistro(idFabricante, fabricanteEditado);
 
@@ -152,7 +129,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 
             Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.DarkYellow);
         }
-        public Fabricante ObterDadosFabricante()
+        public override EntidadeBase ObterDados()
         {
             Console.Write("Digite o nome do fabricante: ");
             string nome = Console.ReadLine()!.Trim();

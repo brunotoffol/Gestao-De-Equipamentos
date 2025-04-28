@@ -1,8 +1,10 @@
-﻿using GestaoDeEquipamentos.ConsoleApp.ModuloFabricante;
+﻿using GestaoDeEquipamentos.ConsoleApp.Compartilhado;
+using GestaoDeEquipamentos.ConsoleApp.ModuloFabricante;
+using System.Net.Mail;
 
 namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
 {
-    public class Equipamento
+    public class Equipamento : EntidadeBase
     {
         public int Id { get; set; }
         public string Nome { get; set; }
@@ -25,6 +27,34 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             PrecoAquisicao = precoAquisicao;
             DataFabricacao = dataFabricacao;
             Fabricante = fabricante;
-        }      
+        }
+
+        public override void AtualizarRegistro(EntidadeBase registroAtualizado)
+        {
+            Equipamento equipamentoAtualizado = (Equipamento)registroAtualizado;
+            
+            Nome = equipamentoAtualizado.Nome;
+            DataFabricacao = equipamentoAtualizado.DataFabricacao;
+            PrecoAquisicao = equipamentoAtualizado.PrecoAquisicao;
+        }
+
+        public override string Validar()
+        {
+            string erros = "";
+
+            if (string.IsNullOrWhiteSpace(Nome))
+                erros += "O campo 'Nome' é obrigatório.\n";
+
+            if (Nome.Length < 3)
+                erros += "O campo 'Nome' precisa conter ao menos 3 caracteres.\n";
+
+            if (PrecoAquisicao <= 0)
+                erros += "O campo 'Preco de Aquisição' deve ser maior que zero. \n";
+
+            if (DataFabricacao > DateTime.Now)
+                erros += "O campo 'Data da Fabricação' deve conter uma data passada. \n";
+
+            return erros;
+        }
     }
 }

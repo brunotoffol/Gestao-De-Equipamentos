@@ -1,5 +1,4 @@
-﻿
-namespace GestaoDeEquipamentos.ConsoleApp
+﻿namespace GestaoDeEquipamentos.ConsoleApp.Util
 {
     public class TelaPrincipal
     {

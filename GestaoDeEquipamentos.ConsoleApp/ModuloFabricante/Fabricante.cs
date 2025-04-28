@@ -33,7 +33,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
             Equipamentos = new Equipamento[100];
         }
 
-        public string Validar()
+        public override string Validar()
         {
             string erros = "";
 
