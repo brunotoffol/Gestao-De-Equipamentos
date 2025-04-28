@@ -1,11 +1,11 @@
-﻿using GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento;
+﻿using GestaoDeEquipamentos.ConsoleApp.Compartilhado;
+using GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento;
 using System.Net.Mail;
 
 namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 {
-    public class Fabricante
-    {
-        public int Id { get; set; }
+    public class Fabricante : EntidadeBase
+    {       
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Telefone { get; set; }
@@ -81,6 +81,16 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
                     return;
                 }
             }
-        }        
+        }
+
+        public override void AtualizarRegistro(EntidadeBase registroEditado)
+        {
+            Fabricante fabricanteEditado = (Fabricante)registroEditado;
+            
+            Nome = fabricanteEditado.Nome;
+            Email = fabricanteEditado.Email;
+            Telefone = fabricanteEditado.Telefone;
+
+        }
     }
 }

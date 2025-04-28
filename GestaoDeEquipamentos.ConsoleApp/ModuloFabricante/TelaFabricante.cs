@@ -59,7 +59,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
                 return;
             }
 
-            repositorioFabricante.CadastrarFabricante(novoFabricante);
+            repositorioFabricante.CadastrarRegistro(novoFabricante);
 
             Notificador.ExibirMensagem("O registro foi concluído com sucesso!", ConsoleColor.Green);
         }
@@ -81,7 +81,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 
             Fabricante fabricanteEditado = ObterDadosFabricante();
 
-            bool conseguiuEditar = repositorioFabricante.EditarFabricante(idFabricante, fabricanteEditado);
+            bool conseguiuEditar = repositorioFabricante.EditarRegistro(idFabricante, fabricanteEditado);
 
             if (!conseguiuEditar)
             {
@@ -108,7 +108,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 
             Console.WriteLine();
 
-            bool conseguiuExcluir = repositorioFabricante.ExcluirFabricante(idFabricante);
+            bool conseguiuExcluir = repositorioFabricante.ExcluirRegistro(idFabricante);
 
             if (!conseguiuExcluir)
             {
@@ -130,7 +130,14 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 
             Console.WriteLine("{0, -6} | {1, -20} | {2, -30} | {3, -30} | {4, -20}", "Id", "Nome", "Email", "Telefone", "Qtd. Equipamentos");
 
-            Fabricante[] fabricantesCadastrados = repositorioFabricante.SelecionarFabricantes();
+            EntidadeBase[] registros = repositorioFabricante.SelecionarRegistros();
+
+            Fabricante[] fabricantesCadastrados = new Fabricante[registros.Length];
+
+            for (int i = 0; i < registros.Length; i++)
+            {
+                fabricantesCadastrados[i] = (Fabricante)registros[i];
+            }
 
             for (int i = 0; i < fabricantesCadastrados.Length; i++)
             {

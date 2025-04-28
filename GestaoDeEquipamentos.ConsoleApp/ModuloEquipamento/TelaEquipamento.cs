@@ -177,7 +177,13 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
 
             Console.WriteLine("{0, -6} | {1, -20} | {2, -30} | {3, -30} | {4, -20}", "Id", "Nome", "Email", "Telefone", "Qtd. Equipamentos");
 
-            Fabricante[] fabricantesCadastrados = repositorioFabricante.SelecionarFabricantes();
+            EntidadeBase[] registros = repositorioFabricante.SelecionarRegistros();
+            Fabricante[] fabricantesCadastrados = new Fabricante[registros.Length];
+
+            for (int i = 0; i < registros.Length; i++)
+            {
+                fabricantesCadastrados[i] = (Fabricante)registros[i];
+            }
 
             for (int i = 0; i < fabricantesCadastrados.Length; i++)
             {
@@ -208,7 +214,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             Console.Write("Digite o ID do fabricante que deseja selecionar: ");
             int idFabricante = Convert.ToInt32(Console.ReadLine());
 
-            Fabricante fabricanteSelecionado = repositorioFabricante.SelecionarFabricantePorId(idFabricante);
+            Fabricante fabricanteSelecionado = (Fabricante)repositorioFabricante.SelecionarRegistroPorId(idFabricante);
 
             Equipamento equipamento = new Equipamento(nome, precoAquisicao, dataFabricacao, fabricanteSelecionado);
             return equipamento;
