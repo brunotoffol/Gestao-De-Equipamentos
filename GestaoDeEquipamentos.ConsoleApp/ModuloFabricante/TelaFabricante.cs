@@ -1,4 +1,5 @@
 ﻿using GestaoDeEquipamentos.ConsoleApp.Compartilhado;
+using GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento;
 using System.ComponentModel.DataAnnotations;
 
 namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
@@ -7,9 +8,9 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
     {
         public RepositorioFabricante repositorioFabricante;
 
-        public TelaFabricante()
+        public TelaFabricante(RepositorioFabricante repositorioFabricante)
         {
-            repositorioFabricante = new RepositorioFabricante();
+            this.repositorioFabricante = repositorioFabricante;
         }
         public void ExibirCabecalho()
         {

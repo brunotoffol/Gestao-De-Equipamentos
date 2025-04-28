@@ -1,21 +1,20 @@
-﻿using GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento;
+﻿using GestaoDeEquipamentos.ConsoleApp.ModuloChamado;
+using GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento;
 using GestaoDeEquipamentos.ConsoleApp.ModuloFabricante;
-
 
 namespace GestaoDeEquipamentos.ConsoleApp
 {
     class Program
     {
-
         static void Main(string[] args)
         {
-            TelaFabricante telaFabricante = new TelaFabricante();
-            
-            TelaEquipamento telaEquipamento = new TelaEquipamento();
+            RepositorioFabricante repositorioFabricante = new RepositorioFabricante();
+            RepositorioEquipamento repositorioEquipamento = new RepositorioEquipamento();
+            RepositorioChamado repositorioChamado = new RepositorioChamado();
 
-            RepositorioEquipamento repositorioEquipamento = telaEquipamento.repositorioEquipamento;
-            
-            TelaChamado telaChamado = new TelaChamado(repositorioEquipamento);
+            TelaFabricante telaFabricante = new TelaFabricante(repositorioFabricante);            
+            TelaEquipamento telaEquipamento = new TelaEquipamento(repositorioEquipamento, repositorioFabricante);        
+            TelaChamado telaChamado = new TelaChamado(repositorioChamado, repositorioEquipamento);
 
             TelaPrincipal telaPrincipal = new TelaPrincipal();
 

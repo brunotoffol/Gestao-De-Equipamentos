@@ -1,6 +1,4 @@
-﻿
-
-namespace GestaoDeEquipamentos.ConsoleApp.Compartilhado
+﻿namespace GestaoDeEquipamentos.ConsoleApp.Compartilhado
 {
     public static class GeradorIds
     {

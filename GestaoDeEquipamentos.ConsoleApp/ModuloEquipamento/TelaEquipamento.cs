@@ -1,15 +1,17 @@
 ﻿using GestaoDeEquipamentos.ConsoleApp.Compartilhado;
+using GestaoDeEquipamentos.ConsoleApp.ModuloFabricante;
 
 namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
 {
     class TelaEquipamento
     {
         public RepositorioEquipamento repositorioEquipamento;
-        public TelaEquipamento()
+        public RepositorioFabricante repositorioFabricante;
+        public TelaEquipamento(RepositorioEquipamento repositorioEquipamento, RepositorioFabricante repositorioFabricante)
         {
-            repositorioEquipamento = new RepositorioEquipamento();
+            this.repositorioEquipamento = repositorioEquipamento;
+            this.repositorioFabricante = repositorioFabricante;
         }
-
         public void ExibirCabecalho()
         {
             Console.Clear();
@@ -18,7 +20,6 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine();
         }
-
         public char ApresentarMenu()
         {            
             ExibirCabecalho();
@@ -44,23 +45,12 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             Console.WriteLine("--------------------------------------------");
             Console.WriteLine();
 
-            Console.Write("Digite o nome do equipamento: ");
-            string nome = Console.ReadLine();
-
-            Console.Write("Digite a fabricante do equipamento: ");
-            string fabricante = Console.ReadLine();
-
-            Console.Write("Digite o valor de aquisição - R$: ");
-            decimal precoAquisicao = Convert.ToDecimal(Console.ReadLine());
-
-            Console.Write("Digite a data de fabricação - (dd/MM/yyyy): ");
-            DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
-
-            Equipamento novoEquipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
+            Equipamento novoEquipamento = ObterDadosEquipamento();
 
             repositorioEquipamento.CadastrarEquipamento(novoEquipamento);
 
-            Console.WriteLine("--------------------------------------------");            
+            Console.WriteLine("--------------------------------------------");
+            Notificador.ExibirMensagem("O registro foi cadastrado com sucesso!", ConsoleColor.Green);
         }
         public void EditarEquipamento()
         {
@@ -79,31 +69,17 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             Console.Write("Digite o ID do equipamento que deseja selecionar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Digite o novo nome do equipamento: ");
-            string nome = Console.ReadLine();
+            Equipamento equipamentoEditado = ObterDadosEquipamento();
 
-            Console.Write("Digite a nova fabricante do equipamento: ");
-            string fabricante = Console.ReadLine();
-
-            Console.Write("Digite o novo valor de aquisição - R$: ");
-            decimal precoAquisicao = Convert.ToDecimal(Console.ReadLine());
-
-            Console.Write("Digite a nova data de fabricação - (dd/MM/yyyy): ");
-            DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
-
-            Equipamento novoEquipamento = new Equipamento(nome, fabricante, precoAquisicao, dataFabricacao);
-
-            bool conseguiuEditar = repositorioEquipamento.EditarEquipamento(idSelecionado, novoEquipamento);
+            bool conseguiuEditar = repositorioEquipamento.EditarEquipamento(idSelecionado, equipamentoEditado);
 
             if (!conseguiuEditar)
             {
-                Console.WriteLine("Não foi possível editar o item selecionado");
+                Console.WriteLine("Não foi possível editar o item selecionado", ConsoleColor.Red);
                 return;
             }
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Equipamento editado com sucesso");
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Pressione ENTER para continuar");
+            Notificador.ExibirMensagem("O registro foi cadastrado com sucesso!", ConsoleColor.Green);
         }
         public void ExcluirEquipamento()
         {
@@ -159,11 +135,60 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
 
                 if (e == null) continue;
 
-                Console.WriteLine("{0, -10} | {1, -15} | {2, -11} | {3, -20} | {4, -20} | {5, -20}", e.Id, e.Nome, e.ObterNumeroSerie(), e.Fabricante, e.PrecoAquisicao.ToString("C2"), e.DataFabricacao.ToShortDateString());
+                Console.WriteLine("{0, -10} | {1, -15} | {2, -11} | {3, -20} | {4, -20} | {5, -20}", e.Id, e.Nome, e.ObterNumeroSerie(), e.Fabricante.Nome, e.PrecoAquisicao.ToString("C2"), e.DataFabricacao.ToShortDateString());
 
             }
 
-            Console.WriteLine("--------------------------------------------");            
+            Console.WriteLine("--------------------------------------------");
+
+            Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.DarkYellow);
+        }
+        public void VisualizarFabricantes()
+        {
+            Console.WriteLine();
+
+            Console.WriteLine("Visualizando Fabricantes...");
+            Console.WriteLine("--------------------------------------------");
+
+            Console.WriteLine();
+
+            Console.WriteLine("{0, -6} | {1, -20} | {2, -30} | {3, -30} | {4, -20}", "Id", "Nome", "Email", "Telefone", "Qtd. Equipamentos");
+
+            Fabricante[] fabricantesCadastrados = repositorioFabricante.SelecionarFabricantes();
+
+            for (int i = 0; i < fabricantesCadastrados.Length; i++)
+            {
+                Fabricante e = fabricantesCadastrados[i];
+
+                if (e == null) continue;
+
+                Console.WriteLine("{0, -6} | {1, -20} | {2, -30} | {3, -30} | {4, -20}", e.Id, e.Nome, e.Email, e.Telefone, 0);
+            }
+
+            Console.WriteLine();
+
+            Notificador.ExibirMensagem("Pressione ENTER para continuar...", ConsoleColor.DarkYellow);
+        }
+        public Equipamento ObterDadosEquipamento()
+        {
+            Console.Write("Digite o nome do equipamento: ");
+            string nome = Console.ReadLine();
+
+            Console.Write("Digite o valor de aquisição - R$: ");
+            decimal precoAquisicao = Convert.ToDecimal(Console.ReadLine());
+
+            Console.Write("Digite a data de fabricação - (dd/MM/yyyy): ");
+            DateTime dataFabricacao = Convert.ToDateTime(Console.ReadLine());
+
+            VisualizarFabricantes();
+
+            Console.Write("Digite o ID do fabricante que deseja selecionar: ");
+            int idFabricante = Convert.ToInt32(Console.ReadLine());
+
+            Fabricante fabricanteSelecionado = repositorioFabricante.SelecionarFabricantePorId(idFabricante);
+
+            Equipamento equipamento = new Equipamento(nome, precoAquisicao, dataFabricacao, fabricanteSelecionado);
+            return equipamento;
         }
     }
 }
