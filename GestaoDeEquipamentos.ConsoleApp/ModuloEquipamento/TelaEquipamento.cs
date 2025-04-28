@@ -26,7 +26,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             
             Console.WriteLine("1 - Cadastro de Equipamento");
             Console.WriteLine("2 - Editar Equipamento");
-            Console.WriteLine("1 - Excluir Equipamento");
+            Console.WriteLine("3 - Excluir Equipamento");
             Console.WriteLine("4 - Visualização dos Equipamentos Cadastrados");
             Console.WriteLine("S - Voltar");
             Console.WriteLine("--------------------------------------------");
@@ -46,6 +46,10 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             Console.WriteLine();
 
             Equipamento novoEquipamento = ObterDadosEquipamento();
+
+            Fabricante fabricante = novoEquipamento.Fabricante;
+
+            fabricante.AdicionarEquipamento(novoEquipamento);
 
             repositorioEquipamento.CadastrarEquipamento(novoEquipamento);
 
@@ -69,14 +73,29 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
             Console.Write("Digite o ID do equipamento que deseja selecionar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
 
+            Equipamento equipamentoAntigo = repositorioEquipamento.SelecionarEquipamentoPorId(idSelecionado);
+            Fabricante fabricanteAntigo = equipamentoAntigo.Fabricante;
+
+            Console.WriteLine();
+
             Equipamento equipamentoEditado = ObterDadosEquipamento();
+
+            Fabricante fabricanteEditado = equipamentoEditado.Fabricante;
 
             bool conseguiuEditar = repositorioEquipamento.EditarEquipamento(idSelecionado, equipamentoEditado);
 
             if (!conseguiuEditar)
             {
-                Console.WriteLine("Não foi possível editar o item selecionado", ConsoleColor.Red);
+                Notificador.ExibirMensagem("Não foi possível editar o item selecionado", ConsoleColor.Red);
+                
                 return;
+            }
+
+            if (fabricanteAntigo != fabricanteEditado)
+            {
+                fabricanteAntigo.RemoverEquipamento(equipamentoAntigo);
+
+                fabricanteEditado.AdicionarEquipamento(equipamentoEditado);
             }
             Console.WriteLine("--------------------------------------------");
             Notificador.ExibirMensagem("O registro foi cadastrado com sucesso!", ConsoleColor.Green);
@@ -93,22 +112,26 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
 
             VisualizarEquipamentos(false);
 
-            Console.WriteLine("Digite o ID do registro que deseja selecionar: ");
+            Console.Write("Digite o ID do registro que deseja selecionar: ");
             int idSelecionado = Convert.ToInt32(Console.ReadLine());
+
+            Equipamento equipamentoSelecionado = repositorioEquipamento.SelecionarEquipamentoPorId(idSelecionado);
 
             bool conseguiuExcluir = repositorioEquipamento.ExcluirEquipamento(idSelecionado);
 
             if (!conseguiuExcluir)
             {
-                Console.WriteLine("Houve um erro durante a exclusão do registro...");
-                Console.WriteLine("Pressione ENTER para continuar");
+                Notificador.ExibirMensagem("Houve um erro durante a exclusão do registro...", ConsoleColor.Red);                
                 return;
             }
 
+            Fabricante fabricanteSelecionado = equipamentoSelecionado.Fabricante;
+
+            fabricanteSelecionado.RemoverEquipamento(equipamentoSelecionado);
+            
             Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Equipamento excluido com sucesso");
-            Console.WriteLine("--------------------------------------------");
-            Console.WriteLine("Pressione ENTER para continuar");
+            Notificador.ExibirMensagem("O registro foi excluído com sucesso!", ConsoleColor.Green);
+
 
         }
         public void VisualizarEquipamentos(bool exibirTitulo)
@@ -158,11 +181,11 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento
 
             for (int i = 0; i < fabricantesCadastrados.Length; i++)
             {
-                Fabricante e = fabricantesCadastrados[i];
+                Fabricante f = fabricantesCadastrados[i];
 
-                if (e == null) continue;
+                if (f == null) continue;
 
-                Console.WriteLine("{0, -6} | {1, -20} | {2, -30} | {3, -30} | {4, -20}", e.Id, e.Nome, e.Email, e.Telefone, 0);
+                Console.WriteLine("{0, -6} | {1, -20} | {2, -30} | {3, -30} | {4, -20}", f.Id, f.Nome, f.Email, f.Telefone, f.ObterQuantidadeEquipamentos());
             }
 
             Console.WriteLine();
