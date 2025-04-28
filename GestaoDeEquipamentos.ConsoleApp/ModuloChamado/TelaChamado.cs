@@ -106,7 +106,7 @@ namespace GestaoDeEquipamentos.ConsoleApp
 
                 if (c == null) continue;
 
-                string tempoDecorrido = $"{c.ObterTempoDecorrido()} dias";
+                string tempoDecorrido = $"{c.TempoDecorrido} dias";
 
                 Console.WriteLine("{0, -6} | {1, -12} | {2, -15} | {3, -30} | {4, -15} | {5, -15}", c.Id, c.DataAbertura.ToShortDateString(), c.Titulo, c.Descricao, c.Equipamento.Nome, tempoDecorrido);
 
@@ -128,7 +128,7 @@ namespace GestaoDeEquipamentos.ConsoleApp
 
                 if (e == null) continue;
 
-                Console.WriteLine("{0, -10} | {1, -15} | {2, -11} | {3, -20} | {4, -20} | {5, -20}", e.Id, e.Nome, e.ObterNumeroSerie(), e.Fabricante, e.PrecoAquisicao.ToString("C2"), e.DataFabricacao.ToShortDateString());
+                Console.WriteLine("{0, -10} | {1, -15} | {2, -11} | {3, -20} | {4, -20} | {5, -20}", e.Id, e.Nome, e.NumeroSerie, e.Fabricante, e.PrecoAquisicao.ToString("C2"), e.DataFabricacao.ToShortDateString());
 
             }
 

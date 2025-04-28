@@ -5,8 +5,8 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloChamado
 {
     public class RepositorioChamado
     {
-        public Chamado[] chamados = new Chamado[100];
-        public int contadorChamados = 0;
+        private Chamado[] chamados = new Chamado[100];
+        private int contadorChamados = 0;
         public void CadastrarChamado(Chamado novoChamado)
         {
             novoChamado.Id = GeradorIds.GerarIdChamado();

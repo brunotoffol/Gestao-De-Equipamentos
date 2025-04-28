@@ -4,12 +4,21 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloChamado
 {
     public class Chamado
     {
-        public int Id;
-        public string Titulo;
-        public string Descricao;
-        public Equipamento Equipamento;
-        public DateTime DataAbertura;
+        public int Id { get; set; }
+        public string Titulo { get; set; }
+        public string Descricao { get; set; }
+        public Equipamento Equipamento { get; set; }
+        public DateTime DataAbertura { get; set; }
+        public int TempoDecorrido
+        {
+            get
+            {
+                TimeSpan diferencaTempo = DateTime.Now.Subtract(DataAbertura);
+                return diferencaTempo.Days;
+            }
 
+
+        }
         public Chamado(string titulo, string descricao, Equipamento equipamento)
         {
             Titulo = titulo;
@@ -18,11 +27,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloChamado
             DataAbertura = DateTime.Now;
         }
 
-        public int ObterTempoDecorrido()
-        {
-            TimeSpan diferencaTempo = DateTime.Now.Subtract(DataAbertura);            
-            return diferencaTempo.Days;
-        }
+
 
     }
 }

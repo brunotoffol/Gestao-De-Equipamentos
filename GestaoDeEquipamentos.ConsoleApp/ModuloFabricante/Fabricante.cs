@@ -5,11 +5,26 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 {
     public class Fabricante
     {
-        public int Id;
-        public string Nome;
-        public string Email;
-        public string Telefone;
-        public Equipamento[] Equipamentos;
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public string Email { get; set; }
+        public string Telefone { get; set; }
+        public Equipamento[] Equipamentos { get; private set; }
+        public int QuantidadeEquipamentos
+        {
+            get
+            {
+                int contador = 0;
+
+                for (int i = 0; i < Equipamentos.Length; i++)
+                {
+                    if (Equipamentos[i] != null)
+                        contador++;
+                }
+
+                return contador;
+            }
+        }
         public Fabricante(string nome, string email, string telefone)
         {
             Nome = nome;
@@ -66,18 +81,6 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
                     return;
                 }
             }
-        }
-        public int ObterQuantidadeEquipamentos()
-        {
-            int contador = 0;
-
-            for (int i = 0; i < Equipamentos.Length; i++)
-            {
-                if (Equipamentos[i] != null)
-                    contador++;
-            }
-
-            return contador;
-        }   
+        }        
     }
 }
