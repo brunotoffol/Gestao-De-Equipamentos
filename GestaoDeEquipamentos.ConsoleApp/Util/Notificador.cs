@@ -1,6 +1,6 @@
 ﻿namespace GestaoDeEquipamentos.ConsoleApp.Util
 {
-    public class Notificador
+    public static class Notificador
     {
        public static void ExibirMensagem(string mensagem, ConsoleColor cor)
         {
@@ -14,21 +14,6 @@
 
             Console.ReadLine();
         }
-        public static void ExibirErros(string[] erros)
-        {
-            Console.ForegroundColor = ConsoleColor.Red;
 
-            Console.WriteLine();
-
-            for (int i = 0; i < erros.Length; i++)
-            {
-                Console.WriteLine(erros[i]);
-            }
-
-            Console.ResetColor();
-
-            Console.Write("Pressione ENTER para tentar novamente...");
-            Console.ReadLine();
-        }
     }
 }

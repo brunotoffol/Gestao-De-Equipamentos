@@ -1,8 +1,19 @@
-﻿namespace GestaoDeEquipamentos.ConsoleApp.Util
+﻿using GestaoDeEquipamentos.ConsoleApp.Compartilhado;
+using GestaoDeEquipamentos.ConsoleApp.ModuloChamado;
+using GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento;
+using GestaoDeEquipamentos.ConsoleApp.ModuloFabricante;
+
+namespace GestaoDeEquipamentos.ConsoleApp.Util
 {
     public class TelaPrincipal
     {
-        public char ApresentarMenuPrincipal()
+        public char opcaoPrincipal;
+
+        RepositorioFabricante repositorioFabricante = new RepositorioFabricante();
+        RepositorioEquipamento repositorioEquipamento = new RepositorioEquipamento();
+        RepositorioChamado repositorioChamado= new RepositorioChamado();        
+        
+        public void ApresentarMenuPrincipal()
         {
             Console.Clear();
 
@@ -18,11 +29,30 @@
             Console.WriteLine("S - Sair");            
 
             Console.WriteLine("--------------------------------------------");
+
+
+            EscolherOpcao();
+        }
+
+        internal TelaBase ObterTela()
+        {
+            if (opcaoPrincipal == '1')
+                return new TelaFabricante(repositorioFabricante);
+
+            else if (opcaoPrincipal == '2')
+                return new TelaEquipamento(repositorioEquipamento, repositorioFabricante);
+
+            else if (opcaoPrincipal == '3')
+                return new TelaChamado(repositorioChamado, repositorioEquipamento);
+
+            return null;
+        }
+
+        private void EscolherOpcao()
+        {
             Console.Write("Escolha uma das opções: ");
 
-            char opcaoEscolhida = Console.ReadLine()![0];
-
-            return opcaoEscolhida;
+            opcaoPrincipal = Console.ReadLine()[0];
         }
     }
 }

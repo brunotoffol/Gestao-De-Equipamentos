@@ -24,48 +24,48 @@ namespace GestaoDeEquipamentos.ConsoleApp.Compartilhado
                 else if (registros[i].Id == idRegistro)
                 {
                     registros[i].AtualizarRegistro(registroEditado);
-                    
-                    return true;
-                }
-            }
 
+                    return true;
+                }                
+            }
+            
             return false;
         }
-        public bool ExcluirRegistro(int idRegistro)
+        public bool ExcluirRegistro(int IdRegistro)
         {
-            for (int i = 0; i < registros.Length; i++)
+            for (int i = 0;i < registros.Length; i++)
             {
                 if (registros[i] == null)
                     continue;
 
-                else if (registros[i].Id == idRegistro)
+                else if (registros[i].Id == IdRegistro)
                 {
                     registros[i] = null;
                     return true;
-                }
+                }             
             }
-
             return false;
         }
         public EntidadeBase[] SelecionarRegistros()
         {
             return registros;
         }
-        public EntidadeBase SelecionarRegistroPorId(int idRegistro)
+        public EntidadeBase SelecionarRegistroPorId(int IdRegistro)
         {
-            for (int i = 0; i < registros.Length; i++)
+            for(int i = 0; i < registros.Length ; i++)
             {
                 EntidadeBase e = registros[i];
 
                 if (e == null)
                     continue;
-                else if (e.Id == idRegistro)
+
+                else if (e.Id == IdRegistro)
                     return e;
             }
 
             return null;
         }
-        private void InserirRegistro(EntidadeBase registro)
+        public void InserirRegistro(EntidadeBase registro)
         {
             for (int i = 0; i < registros.Length; i++)
             {
@@ -76,6 +76,5 @@ namespace GestaoDeEquipamentos.ConsoleApp.Compartilhado
                 }
             }
         }
-
     }
 }

@@ -15,6 +15,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloChamado
             get
             {
                 TimeSpan diferencaTempo = DateTime.Now.Subtract(DataAbertura);
+               
                 return diferencaTempo.Days;
             }
 
@@ -27,7 +28,6 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloChamado
             Equipamento = equipamento;
             DataAbertura = DateTime.Now;
         }
-
         public override void AtualizarRegistro(EntidadeBase registroAtualizado)
         {
             Chamado chamadoAtualizado = (Chamado)registroAtualizado;
@@ -36,7 +36,6 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloChamado
             Descricao = chamadoAtualizado.Descricao;
             Equipamento = chamadoAtualizado.Equipamento;
         }
-
         public override string Validar()
         {
             string erros = "";

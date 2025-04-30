@@ -5,7 +5,7 @@ using System.Net.Mail;
 namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 {
     public class Fabricante : EntidadeBase
-    {       
+    {
         public string Nome { get; set; }
         public string Email { get; set; }
         public string Telefone { get; set; }
@@ -32,7 +32,14 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
             Telefone = telefone;
             Equipamentos = new Equipamento[100];
         }
+        public override void AtualizarRegistro(EntidadeBase registroEditado)
+        {
+            Fabricante fabricanteEditado = (Fabricante)registroEditado;
 
+            Nome = fabricanteEditado.Nome;
+            Email = fabricanteEditado.Email;
+            Telefone = fabricanteEditado.Telefone;
+        }
         public override string Validar()
         {
             string erros = "";
@@ -46,14 +53,14 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
             if (string.IsNullOrWhiteSpace(Email))
                 erros += "O campo 'Email' é obrigatório.\n";
 
-            if (!MailAddress.TryCreate(Email, out _));
-                erros += "O Campo 'Email' deve estar em um formato válido.\n";
+            if (!MailAddress.TryCreate(Email, out _))
+                erros += "O campo 'Email' deve estar em um formato válido.\n";
 
             if (string.IsNullOrWhiteSpace(Telefone))
                 erros += "O campo 'Telefone' é obrigatório.\n";
 
             if (Telefone.Length < 12)
-                erros += "O campo 'Telefone' deve seguir o formato 00 00000-0000.\n";
+                erros += "O campo 'Telefone' deve seguir o formato 00 0000-0000.";
 
             return erros;
         }
@@ -64,9 +71,15 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
                 if (Equipamentos[i] == null)
                 {
                     Equipamentos[i] = equipamento;
+
                     return;
                 }
             }
+
+
+
+
+
         }
         public void RemoverEquipamento(Equipamento equipamento)
         {
@@ -78,19 +91,10 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
                 else if (Equipamentos[i] == equipamento)
                 {
                     Equipamentos[i] = null;
+
                     return;
                 }
             }
-        }
-
-        public override void AtualizarRegistro(EntidadeBase registroEditado)
-        {
-            Fabricante fabricanteEditado = (Fabricante)registroEditado;
-            
-            Nome = fabricanteEditado.Nome;
-            Email = fabricanteEditado.Email;
-            Telefone = fabricanteEditado.Telefone;
-
         }
     }
 }
