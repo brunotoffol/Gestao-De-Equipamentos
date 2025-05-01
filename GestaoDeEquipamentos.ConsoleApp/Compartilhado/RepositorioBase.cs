@@ -1,80 +1,74 @@
 ﻿using GestaoDeEquipamentos.ConsoleApp.ModuloFabricante;
+using System.Collections;
+
 
 namespace GestaoDeEquipamentos.ConsoleApp.Compartilhado
 {
 
     public abstract class RepositorioBase
     {
-        private EntidadeBase[] registros = new EntidadeBase[100];
+        private ArrayList registros = new ArrayList();
         private int contadorIds = 0;
 
         public void CadastrarRegistro(EntidadeBase novoRegistro)
         {
             novoRegistro.Id = ++contadorIds;
 
-            InserirRegistro(novoRegistro);
+            registros.Add(novoRegistro);
         }
         public bool EditarRegistro(int idRegistro, EntidadeBase registroEditado)
         {
-            for (int i = 0; i < registros.Length; i++)
+            foreach (EntidadeBase item in registros)
             {
-                if (registros[i] == null)
-                    continue;
-
-                else if (registros[i].Id == idRegistro)
+                if (item.Id == idRegistro)
                 {
-                    registros[i].AtualizarRegistro(registroEditado);
+                    item.AtualizarRegistro(registroEditado);
 
                     return true;
-                }                
-            }
-            
+                }
+            }         
+                      
             return false;
         }
         public bool ExcluirRegistro(int IdRegistro)
         {
-            for (int i = 0;i < registros.Length; i++)
-            {
-                if (registros[i] == null)
-                    continue;
+            EntidadeBase registroSelecionado = SelecionarRegistroPorId(IdRegistro);
 
-                else if (registros[i].Id == IdRegistro)
-                {
-                    registros[i] = null;
-                    return true;
-                }             
+            if(registroSelecionado != null)
+            {
+                registros.Remove(registroSelecionado);
+                return true;
             }
+            
+            #region exemplo iteração com cor
+            //for (int i = 0;i < registros.Count; i++)
+            //{
+            //    EntidadeBase registroSelecionado = (EntidadeBase) registros[i]!;
+                
+            //    if (registroSelecionado == null)
+            //        continue;
+
+            //    else if (registroSelecionado.Id == IdRegistro)
+            //    {
+            //       registros.Remove(registroSelecionado);
+            //       return true;
+            //   }             
+            //}
+            #endregion
             return false;
         }
-        public EntidadeBase[] SelecionarRegistros()
+        public ArrayList SelecionarRegistros()
         {
             return registros;
         }
         public EntidadeBase SelecionarRegistroPorId(int IdRegistro)
         {
-            for(int i = 0; i < registros.Length ; i++)
+            foreach (EntidadeBase item in registros)
             {
-                EntidadeBase e = registros[i];
-
-                if (e == null)
-                    continue;
-
-                else if (e.Id == IdRegistro)
-                    return e;
-            }
-
+               if (item.Id == IdRegistro)
+                    return item;
+            }           
             return null;
-        }
-        public void InserirRegistro(EntidadeBase registro)
-        {
-            for (int i = 0; i < registros.Length; i++)
-            {
-                if (registros[i] == null)
-                {
-                    registros[i] = registro;
-                    return;
-                }
-            }
-        }
+        }        
     }
 }
