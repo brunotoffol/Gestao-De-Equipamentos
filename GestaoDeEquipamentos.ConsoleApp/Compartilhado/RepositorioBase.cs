@@ -1,24 +1,25 @@
 ﻿using GestaoDeEquipamentos.ConsoleApp.ModuloFabricante;
 using System.Collections;
+using System.Collections.Generic;
 
 
 namespace GestaoDeEquipamentos.ConsoleApp.Compartilhado
 {
 
-    public abstract class RepositorioBase
+    public abstract class RepositorioBase<T> where T : EntidadeBase<T>
     {
-        private ArrayList registros = new ArrayList();
+        private List<T> registros = new List<T>();
         private int contadorIds = 0;
 
-        public void CadastrarRegistro(EntidadeBase novoRegistro)
+        public void CadastrarRegistro(T novoRegistro)
         {
             novoRegistro.Id = ++contadorIds;
 
             registros.Add(novoRegistro);
         }
-        public bool EditarRegistro(int idRegistro, EntidadeBase registroEditado)
+        public bool EditarRegistro(int idRegistro, T registroEditado)
         {
-            foreach (EntidadeBase item in registros)
+            foreach (T item in registros)
             {
                 if (item.Id == idRegistro)
                 {
@@ -32,38 +33,23 @@ namespace GestaoDeEquipamentos.ConsoleApp.Compartilhado
         }
         public bool ExcluirRegistro(int IdRegistro)
         {
-            EntidadeBase registroSelecionado = SelecionarRegistroPorId(IdRegistro);
+            T registroSelecionado = SelecionarRegistroPorId(IdRegistro);
 
             if(registroSelecionado != null)
             {
                 registros.Remove(registroSelecionado);
                 return true;
-            }
+            }           
             
-            #region exemplo iteração com cor
-            //for (int i = 0;i < registros.Count; i++)
-            //{
-            //    EntidadeBase registroSelecionado = (EntidadeBase) registros[i]!;
-                
-            //    if (registroSelecionado == null)
-            //        continue;
-
-            //    else if (registroSelecionado.Id == IdRegistro)
-            //    {
-            //       registros.Remove(registroSelecionado);
-            //       return true;
-            //   }             
-            //}
-            #endregion
             return false;
         }
-        public ArrayList SelecionarRegistros()
+        public List<T> SelecionarRegistros()
         {
             return registros;
         }
-        public EntidadeBase SelecionarRegistroPorId(int IdRegistro)
+        public T SelecionarRegistroPorId(int IdRegistro)
         {
-            foreach (EntidadeBase item in registros)
+            foreach (T item in registros)
             {
                if (item.Id == IdRegistro)
                     return item;

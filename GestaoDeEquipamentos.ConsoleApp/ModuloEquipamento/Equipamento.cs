@@ -5,7 +5,7 @@ using GestaoDeEquipamentos.ConsoleApp.Util;
 
 namespace GestaoDeEquipamentos.ConsoleApp.ModuloEquipamento;
 
-public class Equipamento : EntidadeBase
+public class Equipamento : EntidadeBase<Equipamento>
 {
     public string Nome { get; set; }
     public Fabricante Fabricante { get; set; }
@@ -27,10 +27,8 @@ public class Equipamento : EntidadeBase
         DataFabricacao = dataFabricacao;
         Fabricante = fabricante;
     }
-    public override void AtualizarRegistro(EntidadeBase registroAtualizado)
-    {
-        Equipamento equipamentoAtualizado = (Equipamento)registroAtualizado;
-
+    public override void AtualizarRegistro(Equipamento equipamentoAtualizado)
+    {       
         Nome = equipamentoAtualizado.Nome;
         DataFabricacao = equipamentoAtualizado.DataFabricacao;
         PrecoAquisicao = equipamentoAtualizado.PrecoAquisicao;

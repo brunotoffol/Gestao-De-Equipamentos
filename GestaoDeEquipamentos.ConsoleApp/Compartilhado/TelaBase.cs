@@ -6,12 +6,12 @@ using GestaoDeEquipamentos.ConsoleApp.Util;
 
 namespace GestaoDeEquipamentos.ConsoleApp.Compartilhado;
 
-public abstract class TelaBase
+public abstract class TelaBase<T> where T : EntidadeBase<T>
 {
     protected string nomeEntidade;
-    private RepositorioBase repositorio;
+    private RepositorioBase<T> repositorio;
 
-    protected TelaBase(string nomeEntidade, RepositorioBase repositorio)
+    protected TelaBase(string nomeEntidade, RepositorioBase<T> repositorio)
     {
         this.nomeEntidade = nomeEntidade;
         this.repositorio = repositorio;
@@ -54,7 +54,7 @@ public abstract class TelaBase
 
         Console.WriteLine();
 
-        EntidadeBase novoRegistro = ObterDados();
+        T novoRegistro = ObterDados();
 
         string erros = novoRegistro.Validar();
 
@@ -87,7 +87,7 @@ public abstract class TelaBase
 
         Console.WriteLine();
 
-        EntidadeBase registroEditado = ObterDados();
+        T registroEditado = ObterDados();
 
         string erros = registroEditado.Validar();
 
@@ -139,6 +139,6 @@ public abstract class TelaBase
         Notificador.ExibirMensagem("O registro foi excluído com sucesso!", ConsoleColor.Green);
     }
     public abstract void VisualizarRegistros(bool exibirTitulo);
-    public abstract EntidadeBase ObterDados();
+    public abstract T ObterDados();
 
 }

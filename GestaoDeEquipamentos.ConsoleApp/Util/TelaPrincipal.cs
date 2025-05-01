@@ -34,7 +34,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.Util
             EscolherOpcao();
         }
 
-        internal TelaBase ObterTela()
+        public ITelaCrud ObterTela()
         {
             if (opcaoPrincipal == '1')
                 return new TelaFabricante(repositorioFabricante);
@@ -45,14 +45,14 @@ namespace GestaoDeEquipamentos.ConsoleApp.Util
             else if (opcaoPrincipal == '3')
                 return new TelaChamado(repositorioChamado, repositorioEquipamento);
 
-            return null;
+            return null!;
         }
 
         private void EscolherOpcao()
         {
             Console.Write("Escolha uma das opções: ");
 
-            opcaoPrincipal = Console.ReadLine()[0];
+            opcaoPrincipal = Console.ReadLine()![0];
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 {
-    public class Fabricante : EntidadeBase
+    public class Fabricante : EntidadeBase<Fabricante>
     {
         public string Nome { get; set; }
         public string Email { get; set; }
@@ -32,10 +32,8 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
             Telefone = telefone;
             Equipamentos = new Equipamento[100];
         }
-        public override void AtualizarRegistro(EntidadeBase registroEditado)
-        {
-            Fabricante fabricanteEditado = (Fabricante)registroEditado;
-
+        public override void AtualizarRegistro(Fabricante fabricanteEditado)
+        {           
             Nome = fabricanteEditado.Nome;
             Email = fabricanteEditado.Email;
             Telefone = fabricanteEditado.Telefone;
@@ -90,7 +88,7 @@ namespace GestaoDeEquipamentos.ConsoleApp.ModuloFabricante
 
                 else if (Equipamentos[i] == equipamento)
                 {
-                    Equipamentos[i] = null;
+                    Equipamentos[i] = null!;
 
                     return;
                 }

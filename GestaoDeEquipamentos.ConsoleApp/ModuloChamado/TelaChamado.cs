@@ -6,7 +6,7 @@ using System.Collections;
 
 namespace GestaoDeEquipamentos.ConsoleApp
 {   
-    public class TelaChamado : TelaBase
+    public class TelaChamado : TelaBase<Chamado>, ITelaCrud
     {
         public RepositorioChamado repositorioChamado;
         public RepositorioEquipamento repositorioEquipamento;        
@@ -28,9 +28,9 @@ namespace GestaoDeEquipamentos.ConsoleApp
 
             Console.WriteLine("{0, -6} | {1, -12} | {2, -15} | {3, -30} | {4, -15} | {5, -15}", "Id", "Data de Abertura", "Título", "Descrição", "Equipamento", "Tempo Decorrido");
 
-            ArrayList registros = repositorioChamado.SelecionarRegistros();
+            List<Chamado> registros = repositorioChamado.SelecionarRegistros();
 
-            foreach (Chamado c in registros)
+            foreach (var c in registros)
             {
                 string tempoDecorrido = $"{c.TempoDecorrido} dias";
 
@@ -49,7 +49,7 @@ namespace GestaoDeEquipamentos.ConsoleApp
 
             Console.ReadLine();
         }        
-        public override EntidadeBase ObterDados()
+        public override Chamado ObterDados()
         {
             Console.Write("Digite o título do chamado: ");
             string titulo = Console.ReadLine()!.Trim();
@@ -82,9 +82,9 @@ namespace GestaoDeEquipamentos.ConsoleApp
                 "Id", "Nome", "Num. Série", "Fabricante", "Preço", "Data de Fabricação"
             );
 
-            ArrayList registros = repositorioEquipamento.SelecionarRegistros();
+            List<Equipamento> registros = repositorioEquipamento.SelecionarRegistros();
 
-            foreach(Equipamento e in registros)
+            foreach(var e in registros)
             {
                 Console.WriteLine("{0, -10} | {1, -15} | {2, -11} | {3, -15} | {4, -15} | {5, -10}",e.Id, e.Nome, e.NumeroSerie, e.Fabricante, e.PrecoAquisicao.ToString("C2"), e.DataFabricacao.ToShortDateString());
             }

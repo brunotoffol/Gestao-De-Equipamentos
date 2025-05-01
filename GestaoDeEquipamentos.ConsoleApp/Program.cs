@@ -6,6 +6,7 @@ using GestaoDeEquipamentos.ConsoleApp.Util;
 
 namespace GestaoDeEquipamentos.ConsoleApp
 {
+
     class Program
     {
         static void Main(string[] args)
@@ -16,7 +17,7 @@ namespace GestaoDeEquipamentos.ConsoleApp
             {
                 telaPrincipal.ApresentarMenuPrincipal();
 
-                TelaBase telaSelecionada = telaPrincipal.ObterTela();
+                ITelaCrud telaSelecionada = telaPrincipal.ObterTela();
 
                 char opcaoEscolhida = telaSelecionada.ApresentarMenu();
 
